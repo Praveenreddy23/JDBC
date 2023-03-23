@@ -1,0 +1,112 @@
+                    --:JDBC:--
+--> JDBC:
+ -> JDBC stand for JAVA DATABASE CONNECTIVITY.
+ -> JDBC is an API (Application Programming Interface) it is used to connection between java and database.
+
+ --> API:
+ -> API stands for APPLICATION PROGRAMMING INTERFACE.
+ -> It is a software it allows that two application communicate with each other.
+
+ -> We can not install JDBC explicitly because after JDK 1.0 version its present in java only.
+
+ -> We can not connect java to database directly here with the help of driver.
+
+ --> To connect java to database we have fallows 5 steps they are:
+ STEP 1: Load / register Driver
+ STEP 2: Establish the Connection
+ STEP 3: Establish the Statement(Create JDBC Statement(SQL Queries))
+ STEP 4: Execute the Statement(Execute SQL Queries)
+ STEP 5: Close the Connection
+
+ STEP 1:
+  --> lOAD/REGISTER THE DRIVER:
+  -> In load or register step we create an object for JDBC Driver to talk with database
+  -> We load or register  the Driver in 2 ways they are:
+    1) Class.forName(" ");
+    2) Creates an Object for Driver
+
+    1) Class.forName("String Parameters");
+     -> Here Class is an Identifier or ClassName are present in java.lang package.
+     -> The forName is an public & static method which allows only one String parameters.
+        Example:
+              Class.forName("oracle.jdbc.driver.OracleDriver");//FullyQualifiedClassName
+
+    2) Create an Object of Driver:
+     -> Driver driver = new Driver();
+     -> DriverManager.registerDriver(driver);//Object parameters
+
+     -> Here Driver and DriverManager are the Class present in Java.sql.package.
+     -> The register Driver it an public & static method it allows only one object parameter.
+
+ STEP 2:
+  --> ESTABLISH THE CONNECTION:
+  -> In this connection step we established the connection between java to database.
+  -> We established connection in 3 ways they are:
+    1) get connection("String","String","String"); (url,userId,password)
+    2) get connection("String"); (url/userId/password)
+    3) get connection("String", PropertyFile);
+
+   -> get connection("String","String","String") nothing but the first String specify the url
+       then second String specify the userId and last String specify the password.
+
+   -> PropertyFile: The propertyFile is used to store some configuration information about database.
+
+   Example:
+       Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","805026");
+
+ STEP 3:
+ --> ESTABLISH THE STATEMENT:
+ -> In this step we write some queries to talk with the database.
+ -> We Established Statement in 2 ways they are:
+   1) Statement
+   2) PreparedStatement
+
+   1) Statement:
+    -> Statement is an interface present in java.sql.package and it is used to write some queries in java and
+       it provides some method to executing those queries in database.
+    -> Creating an object for Statement Interface:
+        Statement smt = con.createStatement();
+     Example:
+          Statement smt = con.createStatement();
+          smt.executeUpdate("create table emp(eno number, ename varchar(20),esal number)");
+
+    2) PreparedStatement:
+    -> PreparedStatement is an interface present in java.sql package. and it extends from Statement interface.
+    -> With the help of PreparedStatement we write the queries in Dynamic way.
+    -> Creating an object of PreparedStatement interface:
+       PreparedStatement pSmt = con.prepareStatement(" ");
+    Example:
+       PreparedStatement pSmt = con.prepareStatement("Insert into emp values(?,?,?)");
+
+ STEP 4:
+ --> EXECUTE THE STATEMENT:
+  -> Once the Statement Object is Created there 3 ways to execute queries they are:
+     1)execute("String sql");
+     2)executeUpdate("String sql");
+     3)executeQuery("String sql");
+
+     1) execute("String sql"):
+     -> execute is a method it is used to performed the CRUD operation and return type of execute is boolean.
+
+     2) executeUpdate("String sql"):
+     -> executeUpdate is a method it is used to Updating the data or modifying the data in the database.
+         and the return type of executeUpdate is  int.
+     Example:
+         int count =  smt.executeUpdate("update emp set esal ="+esal+" where eno = "+eid);
+
+     3) executeQuery("String sql"):
+     -> executeQuery is also a  method used to get the data or get  all the data from the database.
+        and the return type of executeQuery is ResultSet.
+
+      -> ResultSet: Is an database it is used to maintain the cursor that point to current row in the result list.
+
+      Example:
+      ResultSet rs = smt.executeQuery("select * from emp");
+
+ STEP 5:
+ --> CLOSE THE CONNECTION:
+ -> For the purpose save the coding mandatory we have to close the connection.
+   Syntax:
+    smt.close();
+    con.close();
+
